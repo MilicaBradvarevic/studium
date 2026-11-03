@@ -22,7 +22,9 @@ public class TimskiZadatak
     public TimskiZadatak(string zadatakId, string timId, string autorSlanja, List<string> trenutniClanoviTima, string sadrzaj)
     {
         if (string.IsNullOrWhiteSpace(sadrzaj))
+        {
             throw new ArgumentException("Sadržaj predaje ne može biti prazan.");
+        }
 
         ZadatakId = zadatakId;
         TimId = timId;
@@ -36,9 +38,13 @@ public class TimskiZadatak
     public void AzurirajRad(string noviSadrzaj)
     {
         if (string.IsNullOrWhiteSpace(noviSadrzaj))
+        {
             throw new ArgumentException("Sadržaj ne može biti prazan.");
 
+        }
         Sadrzaj = noviSadrzaj;
         VremePredaje = DateTime.UtcNow;
+
     }
 }
+
