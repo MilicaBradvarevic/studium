@@ -24,13 +24,17 @@ public class ProjektnaFaza
     public ProjektnaFaza(string nazivProjekta, string nazivFaze, int redosledFaze, string ocekivaniRezultat, DateTime rok, string povezaniZadatakId, ProjektnaFaza? prethodnaFaza = null)
     {
         if (redosledFaze <= 0)
+        {
             throw new ArgumentException("Redosled faze mora biti pozitivan broj.");
+        }
 
         // Sprečavanje ciklusa i provera da zavisnost ide samo na raniju fazu[cite: 6]
         if (prethodnaFaza != null)
         {
             if (prethodnaFaza.RedosledFaze >= redosledFaze)
-                throw new InvalidOperationException("Zavisnost može pokazivati samo na raniju fazu istog projekta."); 
+            {
+                throw new InvalidOperationException("Zavisnost može pokazivati samo na raniju fazu istog projekta.");
+            }
         }
 
         NazivProjekta = nazivProjekta;
