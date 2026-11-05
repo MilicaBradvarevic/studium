@@ -8,6 +8,8 @@ namespace Domain;
 
 public class TimskiZadatak
 {
+    public int ProjektnaFazaId { get; set; }
+    public ProjektnaFaza ProjektnaFaza { get; set; } = null!;
     public int Id { get; set; }
     public string ZadatakId { get; private set; } = string.Empty;
     public string TimId { get; private set; } = string.Empty;

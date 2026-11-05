@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain;
 
+
 public class ProjektnaFaza
 {
+    public ICollection<TimskiZadatak> Zadaci { get; set; } = new List<TimskiZadatak>();
     public int Id { get; set; }
     public string NazivProjekta { get; set; } = string.Empty;
     public string NazivFaze { get; private set; } = string.Empty;
@@ -18,6 +20,7 @@ public class ProjektnaFaza
 
     public int? PrethodnaFazaId { get; private set; }
     public ProjektnaFaza? PrethodnaFaza { get; private set; }
+    
 
     public ProjektnaFaza() { }
 
