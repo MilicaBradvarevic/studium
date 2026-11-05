@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Domain;
-
 
 public class ProjektnaFaza
 {
@@ -20,7 +22,6 @@ public class ProjektnaFaza
 
     public int? PrethodnaFazaId { get; private set; }
     public ProjektnaFaza? PrethodnaFaza { get; private set; }
-    
 
     public ProjektnaFaza() { }
 
@@ -31,13 +32,9 @@ public class ProjektnaFaza
             throw new ArgumentException("Redosled faze mora biti pozitivan broj.");
         }
 
-        // Sprečavanje ciklusa i provera da zavisnost ide samo na raniju fazu[cite: 6]
-        if (prethodnaFaza != null)
+        if (prethodnaFaza != null && prethodnaFaza.RedosledFaze >= redosledFaze)
         {
-            if (prethodnaFaza.RedosledFaze >= redosledFaze)
-            {
-                throw new InvalidOperationException("Zavisnost može pokazivati samo na raniju fazu istog projekta.");
-            }
+            throw new InvalidOperationException("Zavisnost može pokazivati samo na raniju fazu istog projekta.");
         }
 
         NazivProjekta = nazivProjekta;
@@ -48,5 +45,24 @@ public class ProjektnaFaza
         PovezaniZadatakId = povezaniZadatakId;
         PrethodnaFaza = prethodnaFaza;
         PrethodnaFazaId = prethodnaFaza?.Id;
+    }
+
+    // Metoda koja je falila u testovima za dodavanje zadatka
+    public void DodajZadatak(TimskiZadatak zadatak)
+    {
+        Zadaci.Add(zadatak);
+        zadatak.ProjektnaFaza = this;
+    }
+
+    // Metoda koja proverava da li su svi zadaci prihvaćeni pre zatvaranja faze
+    public void ZatvoriFazu()
+    {
+        foreach (var zadatak in Zadaci)
+        {
+            if (zadatak.Status != StanjeZadatka.Prihvaceno)
+            {
+                throw new InvalidOperationException("Faza se ne može zatvoriti ako svi zadaci nisu prihvaćeni.");
+            }
+        }
     }
 }
