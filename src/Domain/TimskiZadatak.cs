@@ -23,8 +23,8 @@ public class TimskiZadatak
     public int Id { get; set; }
     public string ZadatakId { get; private set; } = string.Empty;
     public string TimId { get; private set; } = string.Empty;
-    public string AutorSlanja { get; private set; } = string.Empty;
-    public List<string> SastavTimaUTrenutkuPredaje { get; private set; } = new List<string>();
+    public Student AutorSlanja { get; private set; } = new Student();
+    public List<Student> SastavTimaUTrenutkuPredaje { get; private set; } = new List<Student>();
     public string Sadrzaj { get; private set; } = string.Empty;
 
     // Svojstva koja su tražena u testovima
@@ -34,7 +34,7 @@ public class TimskiZadatak
 
     public TimskiZadatak() { }
 
-    public TimskiZadatak(string zadatakId, string timId, string autorSlanja, List<string> trenutniClanoviTima, string sadrzaj)
+    public TimskiZadatak(string zadatakId, string timId, Student autorSlanja, List<Student> trenutniClanoviTima, string sadrzaj)
     {
         if (string.IsNullOrWhiteSpace(sadrzaj))
         {
@@ -43,8 +43,8 @@ public class TimskiZadatak
 
         ZadatakId = zadatakId;
         TimId = timId;
-        AutorSlanja = autorSlanja;
-        SastavTimaUTrenutkuPredaje = new List<string>(trenutniClanoviTima);
+        AutorSlanja= autorSlanja;
+        SastavTimaUTrenutkuPredaje = new List<Student>(trenutniClanoviTima);
         Sadrzaj = sadrzaj;
         Status = StanjeZadatka.Nepredato;
     }

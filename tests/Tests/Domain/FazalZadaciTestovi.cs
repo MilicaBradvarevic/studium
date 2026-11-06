@@ -2,8 +2,9 @@ using Xunit;
 using Domain;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.Marshalling;
 
-namespace Tests;
+namespace Tests.Domain;
 
 public class FazaIZadaciTestovi
 {
@@ -19,11 +20,14 @@ public class FazaIZadaciTestovi
             "ZadatakID1"
         );
 
+        Student ana = new Student("Ana", 1);
+        Student milos = new Student("Miloš", 2);
+
         var zadatak = new TimskiZadatak(
             "Zadatak 1",
             "Tim1",
-            "Ana",
-            new List<string> { "Ana", "Miloš" },
+            ana,
+            new List<Student> { ana, milos },
             "Početni sadržaj"
         );
 
@@ -35,11 +39,12 @@ public class FazaIZadaciTestovi
     [Fact]
     public void Zadatak_Nakon_Predaje_Menja_Stanje_U_Predato()
     {
+        Student milos = new Student("Miloš", 1);
         var zadatak = new TimskiZadatak(
             "Zadatak 2",
             "Tim1",
-            "Miloš",
-            new List<string> { "Miloš" },
+            milos,
+            new List<Student> { milos },
             "Početni sadržaj"
         );
 
