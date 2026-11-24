@@ -45,9 +45,11 @@ public sealed class Tim
 
     public bool JeTrenutniClan(Guid korisnikId) => _clanovi.Any(c => c.KorisnikId == korisnikId);
 
-    
-    public IReadOnlyList<ClanTimaSnapshot> NapraviSnapshotClanstva() =>
-        _clanovi.Select(c => new ClanTimaSnapshot(c.KorisnikId, c.ImePrezime)).ToList();
+
+    public List<ClanTimaSnapshot> NapraviSnapshotClanstva()
+    {
+        return [.. _clanovi.Select(c => new ClanTimaSnapshot(c.KorisnikId, c.ImePrezime))];
+    }
 
     public void DodajClana(ClanTimaSnapshot clan)
     {

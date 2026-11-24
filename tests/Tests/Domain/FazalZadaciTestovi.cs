@@ -20,16 +20,16 @@ public class FazaIZadaciTestovi
             "ZadatakID1"
         );
 
-        Student ana = new Student("Ana", 1);
-        Student milos = new Student("Miloš", 2);
+        Student ana = new("Ana", 1);
+        Student milos = new("Miloš", 2);
 
         var zadatak = new TimskiZadatak(
-            "Zadatak 1",
-            "Tim1",
-            ana,
-            new List<Student> { ana, milos },
-            "Početni sadržaj"
-        );
+     "Zadatak 1",
+     "Tim1",
+     ana,
+     [ana, milos],
+     "Početni sadržaj"
+     );
 
         faza.DodajZadatak(zadatak);
 
@@ -39,12 +39,12 @@ public class FazaIZadaciTestovi
     [Fact]
     public void Zadatak_Nakon_Predaje_Menja_Stanje_U_Predato()
     {
-        Student milos = new Student("Miloš", 1);
+        Student milos = new("Miloš", 1);
         var zadatak = new TimskiZadatak(
             "Zadatak 2",
             "Tim1",
             milos,
-            new List<Student> { milos },
+            [milos],
             "Početni sadržaj"
         );
 
@@ -66,12 +66,12 @@ public class FazaIZadaciTestovi
             "ZadatakID1"
         );
 
-        Student ana = new Student("Ana", 1);
+        Student ana = new("Ana", 1);
         var zadatak = new TimskiZadatak(
             "Zadatak 1",
             "Tim1",
             ana,
-            new List<Student> { ana },
+            [ana],
             "Početni sadržaj"
         );
 
@@ -87,12 +87,12 @@ public class FazaIZadaciTestovi
     [Fact]
     public void Prazan_Sadrzaj_Predaje_Baca_Izuzetak()
     {
-        Student milos = new Student("Miloš", 1);
+        Student milos = new("Miloš", 1);
         var zadatak = new TimskiZadatak(
             "Zadatak 3",
             "Tim1",
             milos,
-            new List<Student> { milos },
+            [milos],
             "Početni sadržaj"
         );
 

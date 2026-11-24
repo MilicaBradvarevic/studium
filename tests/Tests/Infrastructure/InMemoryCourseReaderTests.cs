@@ -11,7 +11,7 @@ public sealed class InMemoryCourseReaderTests
     public async Task ListAsync_ReturnsSeededCourses()
     {
         var expected = new Course(Guid.NewGuid(), "ERS", "Elementi razvoja softvera");
-        var reader = new InMemoryCourseReader(new[] { expected });
+        var reader = new InMemoryCourseReader([expected]);
 
         var result = await reader.ListAsync();
 
@@ -22,7 +22,7 @@ public sealed class InMemoryCourseReaderTests
     [Test]
     public void ListAsync_RespectsCancellation()
     {
-        var reader = new InMemoryCourseReader(Array.Empty<Course>());
+        var reader = new InMemoryCourseReader([]);
         using var source = new CancellationTokenSource();
         source.Cancel();
 

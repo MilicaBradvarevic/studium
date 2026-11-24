@@ -11,11 +11,11 @@ public sealed class ListCoursesHandlerTests
     [Test]
     public async Task HandleAsync_SortsByCourseCode()
     {
-        IReadOnlyList<Course> courses = new[]
-        {
+        IReadOnlyList<Course> courses =
+        [
             new Course(Guid.NewGuid(), "OIB", "Bezbednost"),
-            new Course(Guid.NewGuid(), "ERS", "Razvoj softvera")
-        };
+        new Course(Guid.NewGuid(), "ERS", "Razvoj softvera")
+        ];
 
         var reader = new Mock<ICourseReader>();
         reader.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
@@ -33,7 +33,7 @@ public sealed class ListCoursesHandlerTests
     {
         var reader = new Mock<ICourseReader>();
         reader.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Array.Empty<Course>());
+            .ReturnsAsync([]);
 
         var result = await new ListCoursesHandler(reader.Object).HandleAsync();
 

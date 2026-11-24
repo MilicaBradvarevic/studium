@@ -11,7 +11,7 @@ namespace Domain;
 
 public class ProjektnaFaza
 {
-    public ICollection<TimskiZadatak> Zadaci { get; set; } = new List<TimskiZadatak>();
+    public ICollection<TimskiZadatak> Zadaci { get; set; } = [];
     public int Id { get; set; }
     public string NazivProjekta { get; set; } = string.Empty;
     public string NazivFaze { get; private set; } = string.Empty;
@@ -57,10 +57,7 @@ public class ProjektnaFaza
 
     public void DodajZadatak(TimskiZadatak zadatak)
     {
-        if (zadatak is null)
-        {
-            throw new ArgumentNullException(nameof(zadatak));
-        }
+        ArgumentNullException.ThrowIfNull(zadatak);
 
         if (JeZatvorena)
         {
