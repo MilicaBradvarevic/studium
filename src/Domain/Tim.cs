@@ -20,15 +20,22 @@ public sealed class Tim
     public Tim(Guid id, Guid projekatId, string naziv, IEnumerable<ClanTimaSnapshot> clanovi)
     {
         if (id == Guid.Empty)
+        {
             throw new ArgumentException("ID tima je obavezan.", nameof(id));
+        }
         if (projekatId == Guid.Empty)
+        {
             throw new ArgumentException("ID projekta je obavezan.", nameof(projekatId));
+        }
         if (string.IsNullOrWhiteSpace(naziv))
+        {
             throw new ArgumentException("Naziv tima je obavezan.", nameof(naziv));
-
+        }
         var lista = clanovi?.ToList() ?? [];
         if (lista.Count == 0)
+        {
             throw new ArgumentException("Tim mora imati bar jednog člana.", nameof(clanovi));
+        }
 
         Id = id;
         ProjekatId = projekatId;
@@ -38,15 +45,18 @@ public sealed class Tim
 
     public bool JeTrenutniClan(Guid korisnikId) => _clanovi.Any(c => c.KorisnikId == korisnikId);
 
-    
-    public IReadOnlyList<ClanTimaSnapshot> NapraviSnapshotClanstva() =>
-        _clanovi.Select(c => new ClanTimaSnapshot(c.KorisnikId, c.ImePrezime)).ToList();
+
+    public List<ClanTimaSnapshot> NapraviSnapshotClanstva()
+    {
+        return [.. _clanovi.Select(c => new ClanTimaSnapshot(c.KorisnikId, c.ImePrezime))];
+    }
 
     public void DodajClana(ClanTimaSnapshot clan)
     {
         if (_clanovi.Any(c => c.KorisnikId == clan.KorisnikId))
+        {
             throw new InvalidOperationException("Korisnik je već član tima.");
-
+        }
         _clanovi.Add(clan);
     }
 
@@ -56,7 +66,9 @@ public sealed class Tim
             ?? throw new KeyNotFoundException("Korisnik nije član tima.");
 
         if (_clanovi.Count == 1)
+        {
             throw new InvalidOperationException("Tim ne može ostati bez članova.");
+        }
 
         _clanovi.Remove(clan);
 

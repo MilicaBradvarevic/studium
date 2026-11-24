@@ -11,7 +11,7 @@ namespace Domain;
 
 public class ProjektnaFaza
 {
-    public ICollection<TimskiZadatak> Zadaci { get; set; } = new List<TimskiZadatak>();
+    public ICollection<TimskiZadatak> Zadaci { get; set; } = [];
     public int Id { get; set; }
     public string NazivProjekta { get; set; } = string.Empty;
     public string NazivFaze { get; private set; } = string.Empty;
@@ -19,13 +19,21 @@ public class ProjektnaFaza
     public string OcekivaniRezultat { get; private set; } = string.Empty;
     public DateTime Rok { get; private set; }
     public string PovezaniZadatakId { get; private set; } = string.Empty;
+    public bool JeZatvorena { get; private set; }
 
     public int? PrethodnaFazaId { get; private set; }
     public ProjektnaFaza? PrethodnaFaza { get; private set; }
 
     public ProjektnaFaza() { }
 
-    public ProjektnaFaza(string nazivProjekta, string nazivFaze, int redosledFaze, string ocekivaniRezultat, DateTime rok, string povezaniZadatakId, ProjektnaFaza? prethodnaFaza = null)
+    public ProjektnaFaza(
+        string nazivProjekta,
+        string nazivFaze,
+        int redosledFaze,
+        string ocekivaniRezultat,
+        DateTime rok,
+        string povezaniZadatakId,
+        ProjektnaFaza? prethodnaFaza = null)
     {
         if (redosledFaze <= 0)
         {
@@ -47,16 +55,27 @@ public class ProjektnaFaza
         PrethodnaFazaId = prethodnaFaza?.Id;
     }
 
-    // Metoda koja je falila u testovima za dodavanje zadatka
     public void DodajZadatak(TimskiZadatak zadatak)
     {
+        ArgumentNullException.ThrowIfNull(zadatak);
+
+        if (JeZatvorena)
+        {
+            throw new InvalidOperationException("Nije moguće dodati zadatak u već zatvorenu fazu.");
+        }
+
         Zadaci.Add(zadatak);
         zadatak.ProjektnaFaza = this;
+        zadatak.ProjektnaFazaId = Id;
     }
 
-    // Metoda koja proverava da li su svi zadaci prihvaćeni pre zatvaranja faze
     public void ZatvoriFazu()
     {
+        if (JeZatvorena)
+        {
+            throw new InvalidOperationException("Faza je već zatvorena.");
+        }
+
         foreach (var zadatak in Zadaci)
         {
             if (zadatak.Status != StanjeZadatka.Prihvaceno)
@@ -64,5 +83,7 @@ public class ProjektnaFaza
                 throw new InvalidOperationException("Faza se ne može zatvoriti ako svi zadaci nisu prihvaćeni.");
             }
         }
+
+        JeZatvorena = true;
     }
 }

@@ -24,7 +24,7 @@ public class TimskiZadatak
     public string ZadatakId { get; private set; } = string.Empty;
     public string TimId { get; private set; } = string.Empty;
     public Student AutorSlanja { get; private set; } = new Student();
-    public List<Student> SastavTimaUTrenutkuPredaje { get; private set; } = new List<Student>();
+    public List<Student> SastavTimaUTrenutkuPredaje { get; private set; } = [];
     public string Sadrzaj { get; private set; } = string.Empty;
 
     // Svojstva koja su tražena u testovima
@@ -44,7 +44,7 @@ public class TimskiZadatak
         ZadatakId = zadatakId;
         TimId = timId;
         AutorSlanja= autorSlanja;
-        SastavTimaUTrenutkuPredaje = new List<Student>(trenutniClanoviTima);
+        SastavTimaUTrenutkuPredaje = [.. trenutniClanoviTima];
         Sadrzaj = sadrzaj;
         Status = StanjeZadatka.Nepredato;
     }
@@ -70,6 +70,16 @@ public class TimskiZadatak
         SadrzajPredaje = sadrzajPredaje;
         Status = StanjeZadatka.Predato;
         VremePredaje = DateTime.UtcNow;
+    }
+
+    public void PrihvatiZadatak()
+    {
+        if (Status != StanjeZadatka.Predato)
+        {
+            throw new InvalidOperationException("Zadatak može biti prihvaćen tek nakon što je predat.");
+        }
+
+        Status = StanjeZadatka.Prihvaceno;
     }
 }
 

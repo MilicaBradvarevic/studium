@@ -16,9 +16,11 @@ public sealed class ListCoursesHandler
         CancellationToken cancellationToken = default)
     {
         var courses = await _reader.ListAsync(cancellationToken);
-        return courses
+        return
+        [
+            .. courses
             .OrderBy(course => course.Code, StringComparer.OrdinalIgnoreCase)
             .Select(course => new CourseListItem(course.Code, course.Name))
-            .ToArray();
+        ];
     }
 }
