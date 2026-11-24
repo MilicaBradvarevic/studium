@@ -8,4 +8,5 @@ namespace Infrastructure;
 
 internal class JsonTimskiZadaciIFazeRepozitorijum
 {
+
 }
