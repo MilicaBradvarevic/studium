@@ -71,5 +71,15 @@ public class TimskiZadatak
         Status = StanjeZadatka.Predato;
         VremePredaje = DateTime.UtcNow;
     }
+
+    public void PrihvatiZadatak()
+    {
+        if (Status != StanjeZadatka.Predato)
+        {
+            throw new InvalidOperationException("Zadatak može biti prihvaćen tek nakon što je predat.");
+        }
+
+        Status = StanjeZadatka.Prihvaceno;
+    }
 }
 
