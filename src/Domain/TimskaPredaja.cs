@@ -36,20 +36,31 @@ public sealed class TimskaPredaja
         DateTime? vremePrihvatanjaUtc = null)
     {
         if (id == Guid.Empty)
+        {
             throw new ArgumentException("ID predaje je obavezan.", nameof(id));
+        }
         if (timskiZadatakId == Guid.Empty)
+        {
             throw new ArgumentException("ID timskog zadatka je obavezan.", nameof(timskiZadatakId));
+        }
         if (timId == Guid.Empty)
+        {
             throw new ArgumentException("ID tima je obavezan.", nameof(timId));
+        }
         if (autorSlanjaId == Guid.Empty)
+        {
             throw new ArgumentException("Autor slanja je obavezan.", nameof(autorSlanjaId));
+        }
         if (string.IsNullOrWhiteSpace(sadrzaj))
+        {
             throw new ArgumentException("Sadržaj predaje je obavezan.", nameof(sadrzaj));
+        }
 
         var snapshot = snimakClanstvaPriPredaji?.ToList() ?? [];
         if (snapshot.Count == 0)
+        {
             throw new ArgumentException("Predaja mora sadržati snimak članstva pri predaji.", nameof(snimakClanstvaPriPredaji));
-
+        }
         Id = id;
         TimskiZadatakId = timskiZadatakId;
         TimId = timId;
@@ -70,16 +81,22 @@ public sealed class TimskaPredaja
         IEnumerable<ClanTimaSnapshot> aktuelniSnapshotClanstva)
     {
         if (JePrihvacena)
+        {
             throw new InvalidOperationException("Prihvaćena predaja ne može biti zamenjena.");
+        }
         if (noviAutorSlanjaId == Guid.Empty)
+        {
             throw new ArgumentException("Autor slanja je obavezan.", nameof(noviAutorSlanjaId));
+        }
         if (string.IsNullOrWhiteSpace(noviSadrzaj))
+        {
             throw new ArgumentException("Novi sadržaj predaje je obavezan.", nameof(noviSadrzaj));
-
+        }
         var snapshot = aktuelniSnapshotClanstva?.ToList() ?? [];
         if (snapshot.Count == 0)
+        {
             throw new ArgumentException("Snimak članstva pri zameni rada je obavezan.", nameof(aktuelniSnapshotClanstva));
-
+        }
         AutorSlanjaId = noviAutorSlanjaId;
         Sadrzaj = noviSadrzaj.Trim();
         VremePredajeUtc = vremeZameneUtc;
@@ -91,8 +108,9 @@ public sealed class TimskaPredaja
     public void Prihvati(Guid nastavnikId, DateTime vremePrihvatanjaUtc)
     {
         if (nastavnikId == Guid.Empty)
+        {
             throw new ArgumentException("ID nastavnika je obavezan.", nameof(nastavnikId));
-
+        }
         JePrihvacena = true;
         PrihvatioNastavnikId = nastavnikId;
         VremePrihvatanjaUtc = vremePrihvatanjaUtc;
