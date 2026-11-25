@@ -10,6 +10,7 @@ public sealed class ListCoursesHandlerTests
 {
     private static readonly string[] ExpectedCourseCodes = ["ERS", "OIB"];
 
+    [Test]
     public static async Task HandleAsync_SortsByCourseCode()
     {
         IReadOnlyList<Course> courses =
@@ -27,7 +28,6 @@ public sealed class ListCoursesHandlerTests
 
         Assert.That(result.Select(x => x.Code), Is.EqualTo(ExpectedCourseCodes));
         reader.Verify(x => x.ListAsync(It.IsAny<CancellationToken>()), Times.Once);
-    
     }
 
     [Test]

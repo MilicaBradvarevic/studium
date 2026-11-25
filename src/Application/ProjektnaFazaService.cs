@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Domain;
-
 
 namespace Application;
 
@@ -59,14 +53,9 @@ public sealed record PregledFazeTimaDto(
     string Status,
     bool Zavrsena);
 
-public sealed class TimskiZadaciIFazeServis
+public sealed class TimskiZadaciIFazeServis(ITimskiZadaciIFazeRepozitorijum repozitorijum)
 {
-    private readonly ITimskiZadaciIFazeRepozitorijum _repozitorijum;
-
-    public TimskiZadaciIFazeServis(ITimskiZadaciIFazeRepozitorijum repozitorijum)
-    {
-        _repozitorijum = repozitorijum;
-    }
+    private readonly ITimskiZadaciIFazeRepozitorijum _repozitorijum = repozitorijum;
 
     public async Task<TimskiZadatak> KreirajZadatakAsync(
         KreirajTimskiZadatakZahtev zahtev,
@@ -79,9 +68,9 @@ public sealed class TimskiZadaciIFazeServis
             zahtev.TrenutniClanoviTima,
             zahtev.Sadrzaj);
 
-        if (zahtev.ProjektnaFazaId.HasValue)
+        if (zahtev.ProjektnaFazaId is int fazaId)
         {
-            zadatak.ProjektnaFazaId = zahtev.ProjektnaFazaId.Value;
+            zadatak.ProjektnaFazaId = fazaId;
         }
 
         await _repozitorijum.SacuvajZadatakAsync(zadatak, cancellationToken);
@@ -219,7 +208,7 @@ public sealed class TimskiZadaciIFazeServis
         Guid timId,
         CancellationToken cancellationToken)
     {
-        var tim = await _repozitorijum.VratiTimPoIdAsync(timId, cancellationToken)
+        _ = await _repozitorijum.VratiTimPoIdAsync(timId, cancellationToken)
             ?? throw new KeyNotFoundException("Tim nije pronađen.");
 
         var faze = (await _repozitorijum.VratiFazeProjektaAsync(projekatId, cancellationToken))
@@ -227,7 +216,7 @@ public sealed class TimskiZadaciIFazeServis
             .ToList();
 
         var fazePoId = faze.ToDictionary(f => f.Id);
-        var rezultat = new List<PregledFazeTimaDto>(faze.Count);
+        List<PregledFazeTimaDto> rezultat = new(faze.Count);
 
         foreach (var faza in faze)
         {
