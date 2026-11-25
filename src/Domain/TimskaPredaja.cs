@@ -113,7 +113,7 @@ public sealed class TimskaPredaja
         VremePrihvatanjaUtc = vremePrihvatanjaUtc;
     }
 
-    // Svi članovi obuhvaćeni predajom imaju pristup potvrdi i pregledu (ST-023)
+    
     public bool MozePregledati(Guid korisnikId) =>
         _snimakClanstvaPriPredaji.Any(c => c.KorisnikId == korisnikId);
 }
