@@ -15,7 +15,7 @@ app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 // ne predstavlja funkcionalnost ST-003 i ne koristiti ga za stvarne podatke.
 app.MapGet("/demo/courses", async (
     ListCoursesHandler handler,
-    CancellationToken cancellationToken) =>
+    CancellationToken cancellationToken) => 
 {
     var courses = await handler.HandleAsync(cancellationToken);
     return Results.Ok(courses);
