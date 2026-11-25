@@ -27,7 +27,6 @@ public class TimskiZadatak
     public List<Student> SastavTimaUTrenutkuPredaje { get; private set; } = [];
     public string Sadrzaj { get; private set; } = string.Empty;
 
-    // Svojstva koja su tražena u testovima
     public StanjeZadatka Status { get; set; } = StanjeZadatka.Nepredato;
     public string? SadrzajPredaje { get; private set; }
     public DateTime VremePredaje { get; private set; }
@@ -59,7 +58,6 @@ public class TimskiZadatak
         VremePredaje = DateTime.UtcNow;
     }
 
-    // Metoda koja je falila u testovima za predaju rada
     public void PredajRad(string sadrzajPredaje)
     {
         if (string.IsNullOrWhiteSpace(sadrzajPredaje))

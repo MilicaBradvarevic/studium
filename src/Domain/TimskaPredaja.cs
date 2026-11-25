@@ -19,8 +19,6 @@ public sealed class TimskaPredaja
     public bool JePrihvacena { get; private set; }
     public Guid? PrihvatioNastavnikId { get; private set; }
     public DateTime? VremePrihvatanjaUtc { get; private set; }
-
-    // Čuva sastav tima u trenutku podnošenja (ST-023)
     public IReadOnlyList<ClanTimaSnapshot> SnimakClanstvaPriPredaji => _snimakClanstvaPriPredaji.AsReadOnly();
 
     public TimskaPredaja(
@@ -73,7 +71,6 @@ public sealed class TimskaPredaja
         VremePrihvatanjaUtc = vremePrihvatanjaUtc;
     }
 
-    // Zamena rada ažurira važeću predaju i beleži novi snapshot članstva (ST-023)
     public void ZameniRad(
         Guid noviAutorSlanjaId,
         string noviSadrzaj,
@@ -116,7 +113,7 @@ public sealed class TimskaPredaja
         VremePrihvatanjaUtc = vremePrihvatanjaUtc;
     }
 
-    // Svi članovi obuhvaćeni predajom imaju pristup potvrdi i pregledu (ST-023)
+    
     public bool MozePregledati(Guid korisnikId) =>
         _snimakClanstvaPriPredaji.Any(c => c.KorisnikId == korisnikId);
 }
