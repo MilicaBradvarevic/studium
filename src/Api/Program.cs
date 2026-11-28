@@ -1,5 +1,6 @@
 using Application;
 using Application.Courses;
+using Application.Validators;
 using Domain;
 using Infrastructure;
 using Infrastructure.Demo;
@@ -9,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 var dataFolder = Path.Combine(builder.Environment.ContentRootPath, "App_Data");
 
 // Composition root: spoljašnji sloj bira implementaciju ugovora.
+builder.Services.AddScoped<TimValidator>();
+builder.Services.AddScoped<TimskiZadatakValidator>();
 builder.Services.AddSingleton<ICourseReader>(_ => DemoData.CreateCourseReader());
 builder.Services.AddScoped<ListCoursesHandler>();
 builder.Services.AddSingleton<ITimskiZadaciIFazeRepozitorijum>(_ =>
